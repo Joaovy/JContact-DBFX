@@ -29,8 +29,8 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void onMenuItemDAboutACtion(){
-        System.out.println("onMenuItemDAboutACtion");
+    public void onMenuItemAboutAction(){
+        System.out.println("onMenuItemAboutACtion");
     }
 
     @Override
