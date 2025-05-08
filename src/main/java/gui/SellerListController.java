@@ -116,7 +116,7 @@ public class SellerListController implements Initializable, DataChangeListener {
             controller.setSeller(obj);
             controller.setSellerService(new SellerService());
             controller.subscribeDataChangeListener(this);
-            controller.updateFromData();
+            controller.updateFormData();
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Enter Seller data");
