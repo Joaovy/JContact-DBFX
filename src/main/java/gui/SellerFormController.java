@@ -20,6 +20,7 @@ import model.services.SellerService;
 
 import javax.swing.text.html.parser.Entity;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -134,6 +135,24 @@ public class SellerFormController implements Initializable {
         }
         obj.setName(txtName.getText());
 
+        if(txtEmail.getText() == null || txtEmail.getText().trim().equals("")){
+            exception.addError("email", "Field can't be empty");
+        }
+        obj.setEmail(txtEmail.getText());
+
+        if(dpBirthDate.getValue() == null){
+            exception.addError("birthDate", "Field can't be empty");
+        } else {
+            Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+            obj.setBirthDate(Date.from(instant));
+        }
+        if(txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")){
+            exception.addError("Base salary", "Field can't be empty");
+        }
+        obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
+
+    obj.setDepartment(comboBoxDepartment.getValue());
+
         if(exception.getErrors().size() > 0){
             throw exception;
         }
@@ -199,9 +218,13 @@ public class SellerFormController implements Initializable {
 
     private void setErrorMessages(Map<String, String> errors){
         Set<String> fields = errors.keySet();
-        if(fields.contains("Name")){
-            labelErrorName.setText(errors.get("Name"));
-        }
+
+        labelErrorName.setText(fields.contains("Name") ? errors.get("name") : "");
+        labelErrorName.setText(fields.contains("email") ? errors.get("email") : "");
+        labelErrorName.setText(fields.contains("baseSalary") ? errors.get("baseSalary") : "");
+        labelErrorName.setText(fields.contains("birthDate") ? errors.get("birthDate") : "");
+
+
     }
 
     private void initializeComboBoxDepartment() {
